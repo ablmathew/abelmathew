@@ -13,18 +13,18 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ablmathew.github.io/Abelmathew-/"),
+  metadataBase: new URL("https://ablmathew.github.io/abelmathew/"),
   title: "Abel Mathew | Cybersecurity & UI/UX Portfolio",
   description:
     "Explore the portfolio, projects, and writing of Abel Mathew, also known as ablmathew.",
   alternates: {
-    canonical: "https://ablmathew.github.io/Abelmathew-/",
+    canonical: "https://ablmathew.github.io/abelmathew/",
   },
   openGraph: {
     title: "Abel Mathew | Cybersecurity & UI/UX Portfolio",
     description:
       "Explore the portfolio, projects, and writing of Abel Mathew, also known as ablmathew.",
-    url: "https://ablmathew.github.io/Abelmathew-/",
+    url: "https://ablmathew.github.io/abelmathew/",
     siteName: "Abel Mathew Portfolio",
     type: "website",
   },
