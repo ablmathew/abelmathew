@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 
-export const dynamic = 'force-static'
+
 
 const siteUrl = 'https://ablmathew.github.io/Abelmathew-/'
 
