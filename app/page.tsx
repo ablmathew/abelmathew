@@ -1,6 +1,7 @@
 
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 
@@ -92,7 +93,7 @@ export default function Home() {
           <a href="#about">About</a>
           <a href="#posts">Posts</a>
           <a href="#contact">Contact</a>
-          <a href="/admin">Admin</a>
+          <Link href="/admin">Admin</Link>
         </div>
       </nav>
 
@@ -128,7 +129,7 @@ export default function Home() {
               {social.name}
             </a>
           ))}
-          <a href="/Abel-Mathew-CV.pdf" download="Abel-Mathew-CV.pdf" className="cv-button">
+          <a href="Abel-Mathew-CV.pdf" download="Abel-Mathew-CV.pdf" className="cv-button">
             Download CV ↓
           </a>
         </div>
@@ -309,6 +310,7 @@ export default function Home() {
     </main>
   )
 }
+
 
 
 

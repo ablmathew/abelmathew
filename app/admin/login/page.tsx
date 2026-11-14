@@ -1,6 +1,7 @@
 
 'use client'
 
+import Link from 'next/link'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '../../../lib/supabase-browser'
@@ -55,9 +56,9 @@ export default function AdminLogin() {
     <main className="login-page">
       <div className="login-card">
 
-        <a href="/" className="login-logo">
+        <Link href="/" className="login-logo">
           ablmathew <span>.</span>
-        </a>
+        </Link>
 
         <div className="login-heading">
           <h1>Welcome back</h1>
@@ -99,9 +100,9 @@ export default function AdminLogin() {
 
         </form>
 
-        <a href="/" className="back-home">
+        <Link href="/" className="back-home">
           ← Back to website
-        </a>
+        </Link>
 
         <p className="login-footer">
           Only for abel mathew
@@ -111,3 +112,4 @@ export default function AdminLogin() {
     </main>
   )
 }
+

@@ -13,9 +13,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ablmathew.github.io/Abelmathew-/"),
   title: "Abel Mathew | Cybersecurity & UI/UX Portfolio",
   description:
     "Explore the portfolio, projects, and writing of Abel Mathew, also known as ablmathew.",
+  alternates: {
+    canonical: "https://ablmathew.github.io/Abelmathew-/",
+  },
+  openGraph: {
+    title: "Abel Mathew | Cybersecurity & UI/UX Portfolio",
+    description:
+      "Explore the portfolio, projects, and writing of Abel Mathew, also known as ablmathew.",
+    url: "https://ablmathew.github.io/Abelmathew-/",
+    siteName: "Abel Mathew Portfolio",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -28,3 +40,4 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     </html>
   );
 }
+
