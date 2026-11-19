@@ -221,18 +221,12 @@ export default function Home() {
                 {post.image_url && (
                   <img
                     src={post.image_url}
-                    alt={post.title}
+                    alt="Portfolio post image"
                     className="post-image"
                   />
                 )}
 
                 <div className="post-details">
-
-                  <span className="post-category">
-                    {post.category}
-                  </span>
-
-                  <h3>{post.title}</h3>
 
                   {post.content && (
                     <p className="post-content">

@@ -21,7 +21,6 @@ export default function AdminPage() {
   const [checkingAuth, setCheckingAuth] = useState(true)
   const [posts, setPosts] = useState<Post[]>([])
   const [editingId, setEditingId] = useState<string | null>(null)
-  const [title, setTitle] = useState('')
   const [category, setCategory] = useState('')
   const [content, setContent] = useState('')
   const [imageUrl, setImageUrl] = useState<string | null>(null)
@@ -153,7 +152,6 @@ export default function AdminPage() {
   }
   function clearEditor() {
     setEditingId(null)
-    setTitle('')
     setCategory('')
     setContent('')
     setImageUrl(null)
@@ -164,7 +162,6 @@ export default function AdminPage() {
 
   function startEditing(post: Post) {
     setEditingId(post.id)
-    setTitle(post.title)
     setCategory(post.category)
     setContent(post.content ?? '')
     setImageUrl(post.image_url)
@@ -177,8 +174,8 @@ export default function AdminPage() {
   async function savePost(published: boolean) {
     setMessage('')
     setError('')
-    if (!title.trim() || !category.trim() || !content.trim()) {
-      setError('Please enter a title, category, and content.')
+    if (!content.trim() && !imageFile && !imageUrl) {
+      setError('Add a description or choose an image before saving.')
       return
     }
     if (imageFile && !imageFile.type.startsWith('image/')) {
@@ -214,10 +211,12 @@ export default function AdminPage() {
       savedImageUrl = supabase.storage.from('website-images').getPublicUrl(imagePath).data.publicUrl
     }
 
+    const existingPost = editingId ? posts.find((post) => post.id === editingId) : undefined
     const values = {
-      title: title.trim(),
-      category: category.trim(),
-      content: content.trim(),
+      // Keep the required database fields populated without showing title/category inputs.
+      title: existingPost?.title ?? '',
+      category: category || (savedImageUrl ? 'photography' : 'writing'),
+      content: content.trim() || null,
       image_url: savedImageUrl,
     }
     const result = editingId
@@ -247,7 +246,6 @@ export default function AdminPage() {
     }
     const wasEditing = Boolean(editingId)
     setEditingId(null)
-    setTitle('')
     setCategory('')
     setContent('')
     setImageUrl(null)
@@ -256,7 +254,7 @@ export default function AdminPage() {
   }
 
   async function deletePost(post: Post) {
-    const confirmed = window.confirm(`Delete "${post.title}"? This permanently removes the post from your website.`)
+    const confirmed = window.confirm('Delete this post? This permanently removes it from your website.')
     if (!confirmed) return
 
     setDeletingId(post.id)
@@ -368,18 +366,8 @@ export default function AdminPage() {
         </div>
 
         <form className="admin-editor" onSubmit={(event) => { event.preventDefault(); void savePost(false) }}>
-          <label htmlFor="post-title">Title</label>
-          <input id="post-title" value={title} onChange={(event) => setTitle(event.target.value)} placeholder="A title for your post" required />
-
-          <label htmlFor="post-category">Category</label>
-          <select id="post-category" value={category} onChange={(event) => setCategory(event.target.value)} required>
-            <option value="">Choose a category</option>
-            <option value="writing">Writing</option>
-            <option value="photography">Photography</option>
-          </select>
-
-          <label htmlFor="post-content">Content</label>
-          <textarea id="post-content" value={content} onChange={(event) => setContent(event.target.value)} placeholder="Write your paragraph or story…" rows={9} required />
+          <label htmlFor="post-content">Description (optional)</label>
+          <textarea id="post-content" value={content} onChange={(event) => setContent(event.target.value)} placeholder="Add a short description if you like…" rows={5} />
 
           <label htmlFor="post-image">Post image (optional, up to 5 MB)</label>
           <input id="post-image" type="file" accept="image/*" onChange={(event) => setImageFile(event.target.files?.[0] ?? null)} />
@@ -414,7 +402,7 @@ export default function AdminPage() {
             <ul>
               {posts.map((post) => (
                 <li key={post.id}>
-                  <div className="admin-post-summary"><strong>{post.title}</strong><span>{post.category} · {new Date(post.created_at).toLocaleDateString()}</span></div>
+                  <div className="admin-post-summary"><span>{new Date(post.created_at).toLocaleDateString()}</span></div>
                   <div className="admin-post-actions">
                     <span className={post.published ? 'admin-status is-published' : 'admin-status'}>{post.published ? 'Published' : 'Draft'}</span>
                     <button type="button" className="admin-edit-button" onClick={() => startEditing(post)}>Edit</button>
